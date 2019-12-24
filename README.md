@@ -1,86 +1,145 @@
-# OMG Community Roadmap Tracker
-The roadmap is a living document that records the steps in which we plan to deliver the functionality defined in the OmiseGO [whitepaper](https://cdn.omise.co/omg/whitepaper.pdf).
+## OMG-JS 
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-*Warning!* Milestones more than one release ahead of what we are working on is subject to change.
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 
-## Fuseki (Delivered!)
-The Fuseki milestone was achieved in Q1 2018. Fuseki delivered the OmiseGO eWallet repositories, which included a server and mobile SDKs to onboard eWallet providers. Blockchain integration will be included in a later milestone.
+This is a Javascript library that allows you to interact with OmiseGo's MoreVP implementation of Plasma. It provides functions to:
 
-The code for the eWallet SDK may be found in [GitHub](https://github.com/omisego/ewallet).
+1. Deposit (Eth/Token) from the Root chain into the Child chain.
+2. Transact on the Child chain.
+3. Exit from the Child chain back to the Root chain.
+4. Challenge an invalid exit.
 
-## Sente (In Progress)
-The Sente milestone includes feedback from users of the closed beta and from Fuseki. Notable changes in the eWallet SDK from Fuseki to Sente includes:
-* A re-designed administrative dashboard
-* Transaction request flow (QR codes) to enable peer to peer payments between users
+## Compatibility
 
-## Honte (Spooned)
-OmiseGO has stopped on the Honte milestone. The repository for Honte may be found [here](https://github.com/omisego/honted). The full design of the blockchain and decentralized exchange on Tendermint may be found [here](https://github.com/omisego/honted/blob/develop/docs/tendermint_blockchain_design.md) and [here](https://github.com/omisego/honted/blob/develop/docs/batch_matching.md) respectively.
+This library is currently compatible with version 0.3 of the OMG Network.
+Below you can find a compatibility table of `omg-js` with `elixir-omg` and `plasma-contracts` SHAs
 
-## Tesuji (In Progress)
-When the Tesuji milestone is reached, we will deliver OmiseGO's first implementation of Plasma. Whilst not decentralized, Tesuji Plasma  does not compromise on security or performance. The design of Tesuji Plasma may be found [here](http://completeme).
+| Version | elixir-omg | plasma-contracts |
+| --- | --- | --- |
+| 3.0.0-alpha.13 (current) | 40f899b | 835d10c |
+| 3.0.0-alpha.12 | 02e67bf | a7e8503 |
+| 3.0.0-alpha.6 | 70e9a68 | 1608296 |
 
-* Proof of Authority run on OmiseGO servers.
-* Exit to Ethereum for final safety.
-* CLI to monitor the child chain.
-* Atomic swap support (note that orders are not firm)
-* Multiple currencies
+## Getting Started
 
-We are actively seeking exchanges who wish to build an exchange front end and matching engine for Tesuji Plasma.
+The project is organized into 3 submodules:
 
-## Aji (On Deck)
-* Support fiat, debit/credit cards, top-up/cash-out, Omise Payment
-* Plugin support in the eWallet SDK for cash in/cash out
+1. @omisego/omg-js-rootchain
+2. @omisego/omg-js-childchain
+3. @omisego/omg-js-util
 
-## TBN (To Be Named DEX Phase 1)
-The implementation of the decentralized exchange is split across two phases. The first DEX phase maintains a centralized service to provide an order matching services. However, the order matching service does not have custody of funds at any time.
+You can use any of them separately, or all at once by importing the parent `@omisego/omg-js` package
 
-* Incentivize UTXO set reduction
-* Non-custodial on child chain order settlement
-* Initial integration of eWallet SDK with ERC20 token support
+## Installation
 
-## TBN (To be Named DEX Phase 2)
-DEX phase 2 fully decentralizes the exchange by moving the order book and order matching processes into the Plasma chain.
-* Decentralized order matching
-* Initial integration of eWallet SDK with Plasma
+#### Node
+Requires Node >= 8.11.3 < 13.0.0
+```
+npm install @omisego/omg-js
+```
 
-## TBN (To Be Named)
-There are use cases where non-fungible tokens are useful, such as ticketing, unique in-game items.
-* Removal of confirmation messages in Tesuji Plasma
-* Conditional payments - Where payments are only made when a condition such as a date and time has passed, or when multiple signatures are present
-* Non-fungible tokens
 
-## TBN (To Be Named - Limited Proof of Stake)
-This milestone will commence the phase-in of staking.
+#### Browser
+Copy the `dist/omg.js` file into your project and include it.
+```
+<script type="text/javascript" src="omg.js"></script>
+```
 
-* Validators and the operator share the responsibility of securing the Plasma chain
 
-## TBN (To Be Named - Proof of Stake)
-* Full proof of stake where the operator is no longer required
+## API Documentation
 
-## Shinte
-The Shinte milestone includes enhancements to the decentralized exchange to mitigate unfair advantages that validators, the operator or other users may have over other users of the decentralized exchange.
+[Documentation for omg-js ](http://omisego.github.io/omg-js)
 
-Order blinding would allow users place an order whose details are not revealed until the order is live in the order book.
-* Provisions against validator/operator front-running
-* Order blinding
+## Design Documentation
 
-## Tengen (Goal)
-The Tengen milestone is reached when the OMG Network:
-* Has a decentralized exchange
-* Uses Proof of Stake consensus
-* Is highly scalable through multiple child chains
-* Is able to interoperate with multiple different blockchains
+[How to sign a transaction](/integration-docs/signing-methods.md)
 
-Note that we plan to continue adding functionality and improving the OmiseGO network after we reach Tengen.
+## Examples
 
-## On the Horizon and Approaching
-Although these items may be at the bottom of this roadmap, it does not mean that they are low priority. Items in the `On the Horizon and Approaching` section may be prioritized and moved into a named milestone.
-* Delegated exit initialization - Allows users who are unable to watch the Plasma chain all of the time to delegate responsibility to watch the Plasma and to exit on the user's behalf.
-* Direct exchange between wallet providers for tokens that are not issued on the blockchain - This feature will enable functionality such as direct interchange of loyalty points between wallet providers.
-* Multiple root chains. ie different root chains for safety
-* Interchain communication - The ability for different child chains to communicate and transact.
-* Child chain independence of root chain - increase safety of the Plasma chain which would in turn reduce dependency on the availability of the root chain
-* Economic incentives for exit and challenges (add bonds)
-* Multiple child chains to a single root chain and nested chains
-* Bitcoin clearinghouse to enable trading on the decentralized exchange Bitcoin and Bitcoin-like cryptocurrencies
-* Mobile light client, mobile trading app
+#### Prerequisites
+
+Both Alice's and Bob's Ethereum accounts need to have some ETH in them. The ETH is used for gas costs on the rootchain, fees on the childchain and the actual ETH transferred from Alice to Bob.
+If you want to run the ERC20 examples, at least Alice's account will need an ERC20 balance to be able to deposit and transact on the childchain.
+
+#### Running the Examples
+
+You can find example code inside `examples` folder. 
+
+To run the examples:
+- `npm install` from root of `omg-js`.
+- `npm run lerna-reset` from root of `omg-js`.
+- Step inside the `/examples` directory.
+- Run `npm install`.
+- Create `.env` file inside the root of the `/examples` directory with the appropriate values (see `/examples/env.example` for an example)
+
+- Refer to below explanation of `.env` variables
+```
+GETH_URL=                       <entry point to an ethereum node>
+WATCHER_URL=                    <url of an informational watcher>
+WATCHER_PROXY_URL=              <*optional* proxy server to catch all watcher requests>
+PLASMA_FRAMEWORK=               <address of the plasma_framework contract>
+ERC20_CONTRACT=                 <*optional* address of the erc20 contract that Alice will deposit and transfer to Bob>
+ALICE_ETH_ADDRESS=              <address of Alice's account>
+ALICE_ETH_ADDRESS_PRIVATE_KEY=  <Alice's private key>
+ALICE_ETH_DEPOSIT_AMOUNT=       <ETH amount Alice will deposit into the childchain>
+ALICE_ERC20_DEPOSIT_AMOUNT=     <ERC20 amount Alice will deposit into the childchain>
+ALICE_ETH_TRANSFER_AMOUNT=      <ETH amount Alice will transfer to Bob>
+ALICE_ERC20_TRANSFER_AMOUNT=    <ERC20 amount Alice will transfer to Bob>
+BOB_ETH_ADDRESS=                <address of Bob's account>
+BOB_ETH_ADDRESS_PRIVATE_KEY=    <Bob's private key>
+MILLIS_TO_WAIT_FOR_NEXT_BLOCK=  <interval when checking for block confirmation>
+BLOCKS_TO_WAIT_FOR_TXN=         <amount of blocks to wait for confirmation>
+```
+
+Let's run through a story between Alice and Bob. In this story, Alice will first deposit some ETH from the root chain into the child chain. Then Alice will transfer some of that ETH to Bob on the child chain. Bob will then exit his funds from the child chain back into the root chain. His root chain balance will be reflected with the extra ETH that Alice sent to him on the child chain.
+
+#### Helpful Scripts
+
+From the `/examples` folder run the following scripts:
+
+- [Get Alice's and Bob's balances](examples/balances.js)
+
+    `npm run balances`
+
+- [Get Alice's and Bob's Childchain UTXOs](examples/childchain-utxos.js)
+
+    `npm run childchain-utxos`
+
+#### ETH Examples
+
+1. [Deposit some ETH from Alice's Rootchain to the Childchain](examples/childchain-deposit-eth.js)
+    
+    `npm run childchain-deposit-eth`
+
+2. [Send some ETH from Alice's Childchain to Bob's Childchain](examples/childchain-transaction-eth.js)
+    
+    `npm run childchain-transaction-eth`
+
+Alice has now sent some ETH to Bob. This should be reflected in Bob's childchain balance.
+
+3. [Exit one of Bob's Childchain UTXOs to the Rootchain](examples/childchain-exit-eth.js)
+
+    `npm run childchain-exit-eth`
+
+Checking Bob's final rootchain balance you will notice it will be a little less than expected. This is because of rootchain gas costs Bob had to pay to exit the childchain.
+
+4. [Bob starts and piggyback's an inflight exit for his ouput on a transaction sent by Alice](example/childchain-inflight-exit-eth.js)
+
+    `npm run childchain-inflight-exit-eth`
+
+#### ERC20 Examples
+
+Now let's run through the same story above but for ERC20 deposit/transaction/exit.
+
+1. [Deposit some ERC20 from Alice's Rootchain to the Childchain](examples/childchain-deposit-erc20.js)
+    
+    `npm run childchain-deposit-erc20`
+
+2. [Send some ERC20 from Alice's Childchain to Bob's Childchain](examples/childchain-transaction-erc20.js)
+    
+    `npm run childchain-transaction-erc20`
+
+3. [Exit one of Bob's Childchain ERC20 UTXOs to the Rootchain](examples/childchain-exit-erc20.js)
+
+    `npm run childchain-exit-erc20`
