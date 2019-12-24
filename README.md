@@ -1,4 +1,8 @@
 ## OMG-JS 
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
+
 This is a Javascript library that allows you to interact with OmiseGo's MoreVP implementation of Plasma. It provides functions to:
 
 1. Deposit (Eth/Token) from the Root chain into the Child chain.
